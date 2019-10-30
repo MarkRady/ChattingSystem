@@ -15,12 +15,12 @@ type ChatController struct {
 * Fetch all resources
 */
 func (c ChatController) Index(token string) revel.Result {
-	apps, err := models.SelectAllChats(token)
-	if err != nil {
-		c.Response.Status = 404
-		return c.RenderJSON(ErrorResponse{Message:"Resource not found"})
-	}
-	return c.RenderJSON(apps)
+	chatsFromDB, _ := models.SelectAllChats(token)
+	chatsFromCash := models.GetRoomsFromCach(token)
+	var chats []models.Chat
+	chats = append(chats, chatsFromDB...)
+	chats = append(chats, chatsFromCash...)
+	return c.RenderJSON(chats)
 }
 
 
@@ -29,13 +29,7 @@ func (c ChatController) Index(token string) revel.Result {
 * Create resource
 */
 func (c ChatController) Create(token string) revel.Result {
-	// Chat := models.Chat{}
-	// jobs.Now(job.InsertChatJob{Token: token, Chat: &Chat})
-	Chat, err := models.InsertChat(token)
-	if err != nil {
-		c.Response.Status = 404
-		return c.RenderJSON(ErrorResponse{Message:"Resource not found"})
-	}
+	Chat := models.AddChatToCach(token)
 	return c.RenderJSON(Chat)
 }
 

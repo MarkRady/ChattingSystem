@@ -45,7 +45,7 @@ func AddMessageToCach(body string, token string, roomNumber int64) (Message) {
 	MessageModel := Message{}
 	MessageModel.Body = body
 	// isWCach := "isWrite"+token+"_"+string(roomNumber)
-	isWCach := getCachNameMsg(token, roomNumber, "isWrite")
+	isWCach := getCachNameMsg(token, roomNumber, "isWriteMessage")
 
 	for {
 		var isWrite int;

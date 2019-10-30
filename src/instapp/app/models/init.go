@@ -22,7 +22,7 @@ import (
 // Connection to database
 // TODO: get from env
 const (
-	DBHOST = "tcp(mysql:3306)"
+	DBHOST = "tcp(mysql)"
     // DBHOST = "tcp(mysql:3306)"
 	DBNAME = "instabug"
 	DBUSER = "root"

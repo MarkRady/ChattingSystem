@@ -3,7 +3,8 @@ package models
 import (
 	"errors"
 	"log"
-	// "github.com/revel/revel/cache"
+	"github.com/revel/revel/cache"
+	"time"
 
 )
 
@@ -15,36 +16,37 @@ type Chat struct {
 }
 
 
-/*
-func getCachNameChat(token string, roomNumber int64, prefix string) string {
-	return prefix+"_"+token+"_"+string(roomNumber)
+
+func getCachNameChat(token string, prefix string) string {
+	return prefix+"_"+token
 }
 
 
-func GetRoomsFromCach(token string, roomNumber int64) []Message {
+func GetRoomsFromCach(token string) []Chat {
 	var chats []Chat
-	cach_key := getCachNameChat(token, roomNumber, "messagesCach")
+	cach_key := getCachNameChat(token, "chatCash")
 	cache.Get(cach_key, &chats);
 	return chats
 }
 
-func getNewNumberCachForMsg(token string, roomNumber int64) int64 {
-	msgs := GetRoomsFromCach(token, roomNumber)
-	if msgs == nil && len(msgs) == 0 {
-		lastMsg := Message{}
-		Chat, _ := SelectChatRoomByNumber(token, roomNumber)
-		lastMsg, _ = GetLastMessage(Chat.Id)
-		return lastMsg.Number+1
+
+
+func getNewNumberCachForChats(token string) int64 {
+	chats := GetRoomsFromCach(token)
+	if chats == nil && len(chats) == 0 {
+		app, _ := SelectOneApp(token)
+		LastChat, _ := GetLastChat(app.Id)
+		return LastChat.Number+1
 	}
 
-	lastMsg := msgs[len(msgs)-1]
-	return lastMsg.Number + 1
+	lastChat := chats[len(chats)-1]
+	return lastChat.Number + 1
 }
 
-func AddMessageToCach(body string, token string, roomNumber int64) (Message) {
-	MessageModel := Message{}
-	MessageModel.Body = body
-	isWCach := getCachNameChat(token, roomNumber, "isWrite")
+
+func AddChatToCach(token string) Chat {
+	ChatModel := Chat{}
+	isWCach := getCachNameChat(token, "isWriteChat")
 
 	for {
 		var isWrite int;
@@ -56,23 +58,23 @@ func AddMessageToCach(body string, token string, roomNumber int64) (Message) {
 	//start writing
     cache.Set(isWCach, 1, 60*time.Minute)
 
-	MessageModel.Number = getNewNumberCachForMsg(token, roomNumber)
+	ChatModel.Number = getNewNumberCachForChats(token)
 
-	msgs := []Message{}
-	msgs = GetRoomsFromCach(token, roomNumber);
-	msgs = append(msgs, MessageModel)
-	cach_key := getCachNameChat(token, roomNumber, "messagesCach")
-    cache.Set(cach_key, msgs, 60*time.Minute)
+	chatsInCach := []Chat{}
+	chatsInCach = GetRoomsFromCach(token);
+	chatsInCach = append(chatsInCach, ChatModel)
+	cach_key := getCachNameChat(token, "chatCash")
+    cache.Set(cach_key, chatsInCach, 60*time.Minute)
     // end of writeing
     cache.Set(isWCach, 0, 60*time.Minute)
 
-    return MessageModel;
+    return ChatModel;
 }
 
-func ClearCachStorageAfterQueueForMessages(token string, roomNumber int64) {
-	cach_key := "messagesCach_"+token+"_"+string(roomNumber)
+func ClearCachStorageAfterQueueForChats(token string) {
+	cach_key := getCachNameChat(token, "chatCash")
 	cache.Delete(cach_key)
-}*/
+}
 
 
 

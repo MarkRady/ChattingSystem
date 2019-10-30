@@ -22,8 +22,8 @@ func (c MessageController) Index(token string, chat_number int64) revel.Result {
 	messagesFromCash := models.GetMessagesFromCach(token, chat_number)
 	messagesFromDB, _ := models.SelectAllMessages(token, chat_number)
 	var msgs []models.Message
-	msgs = append(msgs, messagesFromCash...)
 	msgs = append(msgs, messagesFromDB...)
+	msgs = append(msgs, messagesFromCash...)
 	return c.RenderJSON(msgs)
 	// return c.Render();
 }

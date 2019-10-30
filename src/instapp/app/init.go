@@ -47,6 +47,7 @@ func init() {
 	revel.OnAppStart(models.InitDB)
 	revel.OnAppStart(func() {
         jobs.Schedule("*/10 * * * *", job.SaveMessagesToDB{})
+        jobs.Schedule("*/10 * * * *", job.SaveChatsToDB{})
     })
 	// revel.OnAppStart(models.InitElastic)
 	// revel.OnAppStart(FillCache)

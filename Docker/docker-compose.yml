@@ -1,0 +1,47 @@
+version: "3"
+
+networks:
+        instapp:
+services:
+  revel:
+    image: doitmagic/docker-golang-revel:latest
+    container_name: revel
+    volumes:
+      - ../src/instapp:/root/go/src/instapp
+    working_dir: /root/go 
+    tty: true
+    ports:
+      - "9000:9000"
+    build: 
+      context: ../src/instapp
+      dockerfile: Dockerfile
+    networks:
+        - instapp
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.4.1
+    environment:
+      - discovery.type=single-node
+    volumes:
+      - ../src/instapp/elastic-data:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+      - 9300:9300
+    networks:
+      - instapp
+  mysql:
+      image: mysql:5.7.22
+      container_name: mysql
+      restart: unless-stopped
+      tty: true
+      ports:
+        - "3306:3306"
+      environment:
+        MYSQL_DATABASE: instabug
+        MYSQL_USER: root
+        MYSQL_PASSWORD: 123
+        MYSQL_ROOT_PASSWORD: 123
+        SERVICE_TAGS: dev
+        SERVICE_NAME: mysql
+      networks:
+        - instapp
+    

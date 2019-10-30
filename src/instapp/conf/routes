@@ -1,0 +1,30 @@
+# Routes Config
+#
+# This file defines all application routes (Higher priority routes first)
+#
+
+module:testrunner
+module:jobs
+
+
+GET / 																			ApplicationController.Home
+
+GET     /Applications                                         					ApplicationController.Index
+POST     /Applications                                        					ApplicationController.Create	
+GET     /Applications/:token                                  					ApplicationController.Show	
+PATCH     /Applications/:token                                					ApplicationController.Update	
+DELETE     /Applications/:token                               					ApplicationController.Delete	
+
+
+GET     /Applications/:token/Chats                            					ChatController.Index
+POST     /Applications/:token/Chats                           					ChatController.Create
+GET     /Applications/:token/Chats/:number                    					ChatController.Show
+DELETE     /Applications/:token/Chats/:number                 					ChatController.Delete
+
+GET     /Applications/:token/Chats/:chat_number/Messages                        MessageController.Index
+POST     /Applications/:token/Chats/:chat_number/Messages                       MessageController.Create
+POST     /Applications/:token/Chats/:chat_number/Messages-Search                       MessageController.Search
+GET     /Applications/:token/Chats/:chat_number/Messages/:message_number        MessageController.Show
+PATCH     /Applications/:token/Chats/:chat_number/Messages/:message_number        MessageController.Update
+DELETE     /Applications/:token/Chats/:chat_number/Messages/:message_number     MessageController.Delete
+

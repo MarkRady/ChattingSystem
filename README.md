@@ -44,5 +44,5 @@ The directory structure of a generated Revel application:
 
 ## Challenges
 1) Using Docker and Golang for first time [Done]
-2) Requests to be processed concurrently and handling race conditions [In progress]
+2) Requests to be processed concurrently and handling race conditions [Done]
 

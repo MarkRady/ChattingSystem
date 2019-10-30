@@ -8,6 +8,7 @@ import (
     elasticapi "gopkg.in/olivere/elastic.v7"
 	"github.com/revel/revel/cache"
 	"time"
+	"fmt"
 
 )
 
@@ -64,7 +65,10 @@ func AddMessageToCach(body string, token string, roomNumber int64) (Message) {
 	msgs = append(msgs, MessageModel)
 	cach_key := getCachNameMsg(token, roomNumber, "messagesCach")
 
-    cache.Set(cach_key, msgs, 60*time.Minute)
+    err := cache.Set(cach_key, msgs, 60*time.Minute)
+    if err != nil {
+    	fmt.Println(err.Error())
+    }
     // end of writeing
     cache.Set(isWCach, 0, 60*time.Minute)
 

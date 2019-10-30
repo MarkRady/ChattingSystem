@@ -44,4 +44,10 @@ services:
         SERVICE_NAME: mysql
       networks:
         - instapp
-    
+  redis:
+    image: redis
+    container_name: redis
+    ports:
+        - "6379:6379"
+    networks:
+      - instapp

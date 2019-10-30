@@ -17,7 +17,6 @@ RUN apt-get update -qq \
                            supervisor \
                            git \
                            curl \
-                           redis-server \
                            mercurial
                         
 
@@ -58,4 +57,5 @@ EXPOSE 9000
 
 WORKDIR ${HOME}/go/src/instapp
 
+#CMD ["sh","/root/go/src/instapp/run-redis.sh"]
 CMD ["sh","/root/go/src/instapp/run-the-world.sh"]

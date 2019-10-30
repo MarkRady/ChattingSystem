@@ -14,32 +14,18 @@ type MessageController struct {
 }
 
 
-/*var Wait sync.WaitGroup
-var Counter int = 0
-var Lock sync.Mutex
-
-
-func GetLastId(NewNumber *int64, token string, chat_number int64) {
-// 	// Fetch Chat room
-
-	Chat, _ :=   models.SelectChatRoomByNumber(token, chat_number)
-	lastMsg, _ := models.GetLastMessage(Chat.Id)
-	*NewNumber = int64(lastMsg.Number + 1)
-	// Lock.Unlock()
-
-    Wait.Done()
-}*/
 
 /**
 * Fetch all resources
 */
 func (c MessageController) Index(token string, chat_number int64) revel.Result {
-	messages, err := models.SelectAllMessages(token, chat_number)
-	if err != nil {
-		c.Response.Status = 404
-		return c.RenderJSON(ErrorResponse{Message:"Resource not found"})
-	}
-	return c.RenderJSON(messages)
+	messagesFromCash := models.GetMessagesFromCach(token, chat_number)
+	messagesFromDB, _ := models.SelectAllMessages(token, chat_number)
+	var msgs []models.Message
+	msgs = append(msgs, messagesFromCash...)
+	msgs = append(msgs, messagesFromDB...)
+	return c.RenderJSON(msgs)
+	// return c.Render();
 }
 
 
@@ -48,11 +34,7 @@ func (c MessageController) Index(token string, chat_number int64) revel.Result {
 */
 func (c MessageController) Create(token string, chat_number int64) revel.Result {
 	var Body = c.Params.Form.Get("Body")
-	Message, err := models.InsertMessage(token, chat_number, Body)
-	if err != nil {
-		c.Response.Status = 404
-		return c.RenderJSON(ErrorResponse{Message:"Resource not found"})
-	}
+	Message := models.AddMessageToCach(Body, token, chat_number)
 	return c.RenderJSON(Message)
 }
 

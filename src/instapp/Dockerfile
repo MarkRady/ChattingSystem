@@ -17,6 +17,7 @@ RUN apt-get update -qq \
                            supervisor \
                            git \
                            curl \
+                           redis-server \
                            mercurial
                         
 

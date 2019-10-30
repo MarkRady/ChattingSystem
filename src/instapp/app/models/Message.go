@@ -6,8 +6,81 @@ import (
 	"context"
 	"encoding/json"
     elasticapi "gopkg.in/olivere/elastic.v7"
+	"github.com/revel/revel/cache"
+	"time"
+
 )
 
+
+/**
+* Caching layer
+*/
+
+func getCachNameMsg(token string, roomNumber int64, prefix string) string {
+	return prefix+"_"+token+"_"+string(roomNumber)
+}
+
+
+func GetMessagesFromCach(token string, roomNumber int64) []Message {
+	var Messages []Message
+	cach_key := getCachNameMsg(token, roomNumber, "messagesCach")
+	cache.Get(cach_key, &Messages);
+	return Messages
+}
+
+func getNewNumberCachForMsg(token string, roomNumber int64) int64 {
+	msgs := GetMessagesFromCach(token, roomNumber)
+	if msgs == nil && len(msgs) == 0 {
+		lastMsg := Message{}
+		Chat, _ := SelectChatRoomByNumber(token, roomNumber)
+		lastMsg, _ = GetLastMessage(Chat.Id)
+		return lastMsg.Number+1
+	}
+
+	lastMsg := msgs[len(msgs)-1]
+	return lastMsg.Number + 1
+}
+
+func AddMessageToCach(body string, token string, roomNumber int64) (Message) {
+	MessageModel := Message{}
+	MessageModel.Body = body
+	// isWCach := "isWrite"+token+"_"+string(roomNumber)
+	isWCach := getCachNameMsg(token, roomNumber, "isWrite")
+
+	for {
+		var isWrite int;
+		cache.Get(isWCach, &isWrite)
+		if isWrite == 0 {
+			break
+		}
+	}
+	//start writing
+    cache.Set(isWCach, 1, 60*time.Minute)
+
+	MessageModel.Number = getNewNumberCachForMsg(token, roomNumber)
+
+	msgs := []Message{}
+	msgs = GetMessagesFromCach(token, roomNumber);
+	msgs = append(msgs, MessageModel)
+	cach_key := getCachNameMsg(token, roomNumber, "messagesCach")
+
+    cache.Set(cach_key, msgs, 60*time.Minute)
+    // end of writeing
+    cache.Set(isWCach, 0, 60*time.Minute)
+
+    return MessageModel;
+}
+
+func ClearCachStorageAfterQueueForMessages(token string, roomNumber int64) {
+	cach_key := getCachNameMsg(token, roomNumber, "messagesCach")
+	cache.Delete(cach_key)
+}
+
+
+
+/**
+*  Database layer
+*/
 
 type Message struct {
     Id             int64  `json:"-"`   
@@ -16,6 +89,7 @@ type Message struct {
     Body string 
 }
 
+// to save as json for elasticsearch
 func (message Message) ToString() string {
 	res, err := json.MarshalIndent(message, "", "")
 	if err != nil {
@@ -23,6 +97,7 @@ func (message Message) ToString() string {
 	}
 	return string(res)
 }
+
 
 
 const (

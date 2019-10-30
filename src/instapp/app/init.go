@@ -3,7 +3,10 @@ package app
 import (
 	"github.com/revel/revel"
 	"instapp/app/models"
-    
+	"instapp/app/job"
+    "github.com/revel/modules/jobs/app/jobs"
+
+    	
 )
 
 var (
@@ -42,6 +45,9 @@ func init() {
 	// ( order dependent )
 	// revel.OnAppStart(ExampleStartupScript)
 	revel.OnAppStart(models.InitDB)
+	revel.OnAppStart(func() {
+        jobs.Schedule("*/10 * * * *", job.SaveMessagesToDB{})
+    })
 	// revel.OnAppStart(models.InitElastic)
 	// revel.OnAppStart(FillCache)
 }

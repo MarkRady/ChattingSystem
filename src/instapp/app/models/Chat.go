@@ -3,6 +3,8 @@ package models
 import (
 	"errors"
 	"log"
+	// "github.com/revel/revel/cache"
+
 )
 
 type Chat struct {
@@ -12,6 +14,65 @@ type Chat struct {
     ApplicationId  int64  `json:"-"`   
 }
 
+
+/*
+func getCachNameChat(token string, roomNumber int64, prefix string) string {
+	return prefix+"_"+token+"_"+string(roomNumber)
+}
+
+
+func GetRoomsFromCach(token string, roomNumber int64) []Message {
+	var chats []Chat
+	cach_key := getCachNameChat(token, roomNumber, "messagesCach")
+	cache.Get(cach_key, &chats);
+	return chats
+}
+
+func getNewNumberCachForMsg(token string, roomNumber int64) int64 {
+	msgs := GetRoomsFromCach(token, roomNumber)
+	if msgs == nil && len(msgs) == 0 {
+		lastMsg := Message{}
+		Chat, _ := SelectChatRoomByNumber(token, roomNumber)
+		lastMsg, _ = GetLastMessage(Chat.Id)
+		return lastMsg.Number+1
+	}
+
+	lastMsg := msgs[len(msgs)-1]
+	return lastMsg.Number + 1
+}
+
+func AddMessageToCach(body string, token string, roomNumber int64) (Message) {
+	MessageModel := Message{}
+	MessageModel.Body = body
+	isWCach := getCachNameChat(token, roomNumber, "isWrite")
+
+	for {
+		var isWrite int;
+		cache.Get(isWCach, &isWrite)
+		if isWrite == 0 {
+			break
+		}
+	}
+	//start writing
+    cache.Set(isWCach, 1, 60*time.Minute)
+
+	MessageModel.Number = getNewNumberCachForMsg(token, roomNumber)
+
+	msgs := []Message{}
+	msgs = GetRoomsFromCach(token, roomNumber);
+	msgs = append(msgs, MessageModel)
+	cach_key := getCachNameChat(token, roomNumber, "messagesCach")
+    cache.Set(cach_key, msgs, 60*time.Minute)
+    // end of writeing
+    cache.Set(isWCach, 0, 60*time.Minute)
+
+    return MessageModel;
+}
+
+func ClearCachStorageAfterQueueForMessages(token string, roomNumber int64) {
+	cach_key := "messagesCach_"+token+"_"+string(roomNumber)
+	cache.Delete(cach_key)
+}*/
 
 
 

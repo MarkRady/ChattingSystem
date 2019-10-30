@@ -1,43 +1,48 @@
-# Welcome to Revel
+# Welcome to My first Chatting System with Golang and Docker
 
-A high-productivity web framework for the [Go language](http://www.golang.org/).
+Highly concurrent app for chatting app using Revel framework and jobs 
 
+### Requirements
+    - Docker
+    - Docker-machine
+    - Docker-compose
 
-### Start the web server:
+### Start App:
 
-   revel run myapp
-
-### Go to http://localhost:9000/ and you'll see:
-
-    "It works"
+   1. Clone repository
+   ```bash
+        git clone https://github.com/MarkRady/ChattingSystem.git
+   ```
+   2. run app 
+   ```bash
+        cd ChattingSystem/Docker
+        docker-composer up
+   ```
+  3. it's take up-to 1mins to getting start after pulling images and build containers
+  ####  Go to http://localhost:9000/ and you'll see:
+  4) Apis documentation
+ [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/4cc1380527b2fb8309a5)
 
 ## Code Layout
 
 The directory structure of a generated Revel application:
 
-    conf/             Configuration directory
-        app.conf      Main app configuration file
-        routes        Routes definition file
+    src/instapp/conf/             Configuration directory
+    src/instapp/app.conf          Main app configuration file
+    src/instapp/routes            Routes definition file
 
-    app/              App sources
-        init.go       Interceptor registration
-        controllers/  App controllers go here
-        views/        Templates directory
+    src/instapp/app/   App sources
+        init.go        Interceptor registration
+        controllers/   App controllers go here
+        models/        Database models and init to database and elasticsearch
 
-    messages/         Message files
+## TODO:
+1) Implement env file
+2) figure-out best way for concurrent requests to avoid duplication
+3) Currently i implement queues for api of delete application as an POC,
+   i have to implement this due write queries for database to avoid writing directly to database
 
-    public/           Public static assets
-        css/          CSS files
-        js/           Javascript files
-        images/       Image files
-
-    tests/            Test suites
-
-
-## Help
-
-* The [Getting Started with Revel](http://revel.github.io/tutorial/gettingstarted.html).
-* The [Revel guides](http://revel.github.io/manual/index.html).
-* The [Revel sample apps](http://revel.github.io/examples/index.html).
-* The [API documentation](https://godoc.org/github.com/revel/revel).
+## Challenges
+1) Using Docker and Golang for first time [Done]
+2) Requests to be processed concurrently and handling race conditions [In progress]
 

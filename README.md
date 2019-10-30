@@ -37,10 +37,8 @@ The directory structure of a generated Revel application:
         models/        Database models and init to database and elasticsearch
 
 ## TODO:
-1) Implement env file
-2) figure-out best way for concurrent requests to avoid duplication
-3) Currently i implement queues for api of delete application as an POC,
-   i have to implement this due write queries for database to avoid writing directly to database
+1) Implement env file for general configurations
+2) figure-out better ways for concurrency 
 
 ## Challenges
 1) Using Docker and Golang for first time [Done]

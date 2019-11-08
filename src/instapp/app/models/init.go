@@ -33,7 +33,9 @@ const (
 // Global database references
 var db *sql.DB
 var dbmap *gorp.DbMap
-
+/** 
+* establish database connection
+*/
 func InitDB(){
 	var err error
 

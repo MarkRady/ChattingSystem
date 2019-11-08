@@ -51,11 +51,7 @@ WORKDIR ${HOME}/go
 # clear apt cache and remove unnecessary packages
 RUN apt-get autoclean && apt-get -y autoremove
 
-
 EXPOSE 9000
 
-
 WORKDIR ${HOME}/go/src/instapp
-
-#CMD ["sh","/root/go/src/instapp/run-redis.sh"]
 CMD ["sh","/root/go/src/instapp/run-the-world.sh"]

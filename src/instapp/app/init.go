@@ -3,8 +3,8 @@ package app
 import (
 	"github.com/revel/revel"
 	"instapp/app/models"
-	"instapp/app/job"
-    "github.com/revel/modules/jobs/app/jobs"
+	// "instapp/app/job"
+    // "github.com/revel/modules/jobs/app/jobs"
 
     	
 )

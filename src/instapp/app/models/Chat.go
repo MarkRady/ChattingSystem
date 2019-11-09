@@ -5,7 +5,7 @@ import (
 	"log"
 	"github.com/revel/revel/cache"
 	"time"
-
+	"encoding/json"
 )
 
 type Chat struct {
@@ -16,6 +16,22 @@ type Chat struct {
 }
 
 
+func (chat Chat) ToString() string {
+	res, err := json.Marshal(chat)
+	if err != nil {
+		return "Data Is empty"
+	}
+	return string(res)
+}
+
+func jsonToChat(data string) Chat {
+	chat := Chat{}
+	json.Unmarshal([]byte(data), &chat)
+	return chat
+}
+
+
+
 
 func getCachNameChat(token string, prefix string) string {
 	return prefix+"_"+token
@@ -23,10 +39,20 @@ func getCachNameChat(token string, prefix string) string {
 
 
 func GetRoomsFromCach(token string) []Chat {
+	cachKey := getCachNameChat(token, "chatCash") 
 	var chats []Chat
-	cach_key := getCachNameChat(token, "chatCash")
-	cache.Get(cach_key, &chats);
+	var chatsAsJson []byte // declare variable to contain data from caching as bytes
+	cache.Get(cachKey, &chatsAsJson) // get data from cach and assign to chatsAsJson
+	json.Unmarshal(chatsAsJson, &chats) // convert bytes to struct of Chat
 	return chats
+}
+
+func GetRoomsFromCachAsJson(token string) []string {
+	var chatsAsJson []string
+	cachKey := getCachNameChat(token, "chatCash")
+	cache.Get(cachKey, &chatsAsJson);
+	
+	return chatsAsJson
 }
 
 
@@ -38,7 +64,8 @@ func getNewNumberCachForChats(token string) int64 {
 		LastChat, _ := GetLastChat(app.Id)
 		return LastChat.Number+1
 	}
-
+	// fmt.Println("chats")
+	// fmt.Println(chats)
 	lastChat := chats[len(chats)-1]
 	return lastChat.Number + 1
 }
@@ -59,16 +86,25 @@ func AddChatToCach(token string) Chat {
     cache.Set(isWCach, 1, 60*time.Minute)
 
 	ChatModel.Number = getNewNumberCachForChats(token)
-
-	chatsInCach := []Chat{}
-	chatsInCach = GetRoomsFromCach(token);
-	chatsInCach = append(chatsInCach, ChatModel)
-	cach_key := getCachNameChat(token, "chatCash")
-    cache.Set(cach_key, chatsInCach, 60*time.Minute)
+	addToCachAsJson(ChatModel, token)
+	
     // end of writeing
     cache.Set(isWCach, 0, 60*time.Minute)
 
     return ChatModel;
+}
+
+func addToCachAsJson(chat Chat, token string) {
+
+	chatsInCach := []Chat{}
+	chatsInCach = GetRoomsFromCach(token);
+	chatsInCach = append(chatsInCach, chat)
+	
+	convertChatToJsonArray,_ := json.MarshalIndent(&chatsInCach, "", "\t") // convert array of chats to json array and with json intendents
+
+	cach_key := getCachNameChat(token, "chatCash")
+    cache.Set(cach_key, convertChatToJsonArray, 60*time.Minute) // save to cach
+
 }
 
 func ClearCachStorageAfterQueueForChats(token string) {

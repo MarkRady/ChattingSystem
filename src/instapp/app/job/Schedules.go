@@ -44,11 +44,11 @@ func (s SaveChatsToDB) Run() {
 	for _, app := range apps {
 		Token := app.Token
 		// get chats
-		chatsInCach := models.GetRoomsFromCach(Token)
+		// chatsInCach := models.GetRoomsFromCach(Token)
 
-		for range chatsInCach {
-			models.InsertChat(Token)
-		}
+		// for range chatsInCach {
+		// 	models.InsertChat(Token)
+		// }
 		models.ClearCachStorageAfterQueueForChats(Token)
 
 	

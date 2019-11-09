@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"github.com/revel/revel"
+	// "encoding/json"
 	"instapp/app/models"
     // "github.com/revel/modules/jobs/app/jobs"
 	// "instapp/app/job"
@@ -15,6 +16,12 @@ type ChatController struct {
 * Fetch all resources
 */
 func (c ChatController) Index(token string) revel.Result {
+	// st1 := `
+	// [{"Number": 1,"messages_count": 0}]`
+	// chat := models.Chat{}
+	// json.Unmarshal([]byte(st1), &chat)
+	// return c.RenderJSON(chat)
+	
 	chatsFromDB, _ := models.SelectAllChats(token)
 	chatsFromCash := models.GetRoomsFromCach(token)
 	var chats []models.Chat

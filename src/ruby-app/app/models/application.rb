@@ -2,6 +2,8 @@ class Application < ApplicationRecord
     before_create :set_token, :set_chat_count
     validates :Name, presence: true
 
+    has_many :chats, dependent: :destroy
+
 
     private
 

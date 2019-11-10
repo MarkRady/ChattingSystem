@@ -35,6 +35,9 @@ module RubyApp
     # Be sure to have the adapter's gem in your Gemfile
     # and follow the adapter's specific installation
     # and deployment instructions.
+    config.cache_store = :redis_cache_store, { url: 'redis://redis:6379' }
+
+
     config.active_job.queue_adapter = :sidekiq
   end
 end

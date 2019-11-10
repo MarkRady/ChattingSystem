@@ -1,11 +1,11 @@
-:verbose: false
-:concurrency: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-:timeout: 30
+:concurrency: 5
 :queues:
-  - [low_priority, 1]
-  - [high_priority, 2] # high priority
+  - default
 :schedule:
-  SaveChatJob:
-    cron: '* * * * *'
-    queue: scheduler
-    enabled: true
+  save_chat:
+    every: 5s
+    class : SaveChatWorker
+    # queue: scheduler
+    # enabled: true
+  
+  

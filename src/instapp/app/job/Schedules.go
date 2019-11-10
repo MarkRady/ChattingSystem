@@ -39,21 +39,19 @@ type SaveChatsToDB struct {
 
 func (s SaveChatsToDB) Run() {
 	// get apps
-	apps, _ := models.SelectAllApps()
+	// apps, _ := models.SelectAllApps()
 
-	for _, app := range apps {
-		Token := app.Token
+	// for _, app := range apps {
+		// Token := app.Token
 		// get chats
 		// chatsInCach := models.GetRoomsFromCach(Token)
 
 		// for range chatsInCach {
 		// 	models.InsertChat(Token)
 		// }
-		models.ClearCachStorageAfterQueueForChats(Token)
+		// models.ClearCachStorageAfterQueueForChats(Token)
 
-	
-
-	}
+	// }
 }
 
 

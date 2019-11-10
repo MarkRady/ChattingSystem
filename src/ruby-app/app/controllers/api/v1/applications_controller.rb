@@ -2,8 +2,7 @@ class Api::V1::ApplicationsController < ApplicationController
 
     def index
         applications = Application.select(:Token, :Name).order("Id Desc")
-        # chats = Rails.cache.fetch('chatCash_ibAymDqEZonAW8kpHauAvg')
-        render json: {data: applications}, status: :ok
+        render json: {data: applications, chatsInCach: chatsInCach}, status: :ok
     end
 
     def create

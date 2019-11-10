@@ -6,6 +6,7 @@ import (
 	"github.com/revel/revel/cache"
 	"time"
 	"encoding/json"
+	// "fmt"
 )
 
 type Chat struct {
@@ -64,8 +65,6 @@ func getNewNumberCachForChats(token string) int64 {
 		LastChat, _ := GetLastChat(app.Id)
 		return LastChat.Number+1
 	}
-	// fmt.Println("chats")
-	// fmt.Println(chats)
 	lastChat := chats[len(chats)-1]
 	return lastChat.Number + 1
 }
@@ -183,10 +182,13 @@ func SelectChatRoomByNumber(token string, number int64) (Chat, error) {
 }
 
 func GetLastChat(AppId int64) (Chat, error) {
+
+
 	Chat := &Chat{}
 	// get chat room
 	err := dbmap.SelectOne(&Chat, "SELECT * FROM `chats` WHERE `ApplicationId`=? ORDER BY `Id` DESC limit 1;", AppId)
 	if err != nil {
+		logErrDb(err, "db err")
 		return *Chat, errors.New("error select")
 	}
 	return *Chat, nil

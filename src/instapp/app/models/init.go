@@ -4,7 +4,6 @@ import (
 	"database/sql"
 	_ "github.com/go-sql-driver/mysql"
     "gopkg.in/gorp.v1"
-    "log"
     elasticapi "gopkg.in/olivere/elastic.v7"
     "context"
     "fmt"
@@ -22,8 +21,8 @@ import (
 // Connection to database
 // TODO: get from env
 const (
-	// DBHOST = "tcp(mysql)"
-    DBHOST = "tcp(mysql:3306)"
+	DBHOST = "tcp(mysql)"
+    // DBHOST = "tcp(mysql:3306)"
 	DBNAME = "instabug"
 	DBUSER = "root"
 	DBPASS = "123"
@@ -64,7 +63,7 @@ func buildDatabaseTables() {
 // log database errors to console
 func logErrDb(err error, msg string) {
     if err != nil {
-        log.Fatalln("DB ERR", err)
+        fmt.Println("DB ERR", err)
     }
 }
 

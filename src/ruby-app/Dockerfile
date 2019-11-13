@@ -14,8 +14,10 @@ COPY Gemfile.lock /root/ruby-app/Gemfile.lock
 RUN bundle install
 
 EXPOSE 3000
+WORKDIR /root/ruby-app
 
 # Start the main process.
 # RUN bundle exec sidekiq
-CMD ["bundle", "exec", "sidekiq"]
+# CMD ["bundle", "exec", "sidekiq"]
+
 CMD ["rails", "server", "-b", "0.0.0.0"]

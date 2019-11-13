@@ -2,7 +2,7 @@ class Api::V1::ApplicationsController < ApplicationController
 
     def index
         applications = Application.select(:Token, :Name).order("Id Desc")
-        render json: {data: applications, chatsInCach: chatsInCach}, status: :ok
+        render json: {data: applications}, status: :ok
     end
 
     def create

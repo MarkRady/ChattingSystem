@@ -28,7 +28,18 @@ services:
       dockerfile: Dockerfile
     networks:
         - instapp
-  
+  sidekiq:
+    build: 
+      context: ../src/ruby-app
+      dockerfile: Dockerfile
+    volumes:
+      - ../src/ruby-app:/root/ruby-app
+    links:
+      - mysql
+      - redis
+    command: bundle exec sidekiq -C config/sidekiq.yml 
+    networks:
+        - instapp
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.4.1
     environment:

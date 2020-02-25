@@ -1,0 +1,554 @@
+{
+	"info": {
+		"_postman_id": "cf1c280a-86d8-48c7-8756-c65f391fa5e3",
+		"name": "ChatSystem-instabug",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Applications(RoR)",
+			"item": [
+				{
+					"name": "Get list of resources",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/v1/applications",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"applications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Resource",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "Name",
+									"value": "App23",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/applications",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"applications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show Resource",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/applications/{Token}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"applications",
+								"{Token}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update resource",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "Name",
+									"value": "mark channel",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/applications/{Token}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"applications",
+								"{Token}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Chat",
+			"item": [
+				{
+					"name": "Get list of resources",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9000/Applications/ro-jvZUTlRy9ZDPiwPEQQA/Chats",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"Applications",
+								"ro-jvZUTlRy9ZDPiwPEQQA",
+								"Chats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Resource",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "localhost:9000/Applications/{app_token}/Chats",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"Applications",
+								"{app_token}",
+								"Chats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show Chat",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "Name",
+									"value": "Mark",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:9000/Applications/{app_token}/Chats/{chat_number}",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"Applications",
+								"{app_token}",
+								"Chats",
+								"{chat_number}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Messages",
+			"item": [
+				{
+					"name": "Get list of resources",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9000/Applications/{app_token}/Chats/{Number}/Messages",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"Applications",
+								"{app_token}",
+								"Chats",
+								"{Number}",
+								"Messages"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Resource",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "Body",
+									"value": "Hello my world",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:9000/Applications/{App_token}/Chats/{Number}/Messages",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"Applications",
+								"{App_token}",
+								"Chats",
+								"{Number}",
+								"Messages"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "Body",
+									"value": "hello",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:9000/Applications/{app_token}/Chats/{Number}/Messages-Search",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"Applications",
+								"{app_token}",
+								"Chats",
+								"{Number}",
+								"Messages-Search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single message",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "localhost:9000/Applications/{app_token}/Chats/{chat_number}/Messages/{message_number}",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"Applications",
+								"{app_token}",
+								"Chats",
+								"{chat_number}",
+								"Messages",
+								"{message_number}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update message",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "Body",
+									"value": "Mark msg33",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:9000/Applications/{app_token}/Chats/{chat_number}/Messages/{message_number}",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"Applications",
+								"{app_token}",
+								"Chats",
+								"{chat_number}",
+								"Messages",
+								"{message_number}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete resource",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "Name",
+									"value": "Mark",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:9000/Applications/{app_token}/Chats/{chat_number}/Messages/{message_number}",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"Applications",
+								"{app_token}",
+								"Chats",
+								"{chat_number}",
+								"Messages",
+								"{message_number}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "__Applications(Via Golang) -- Depricated",
+			"item": [
+				{
+					"name": "Get list of resources",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:9000/Applications",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "9000",
+							"path": [
+								"Applications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Resource",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "Name",
+									"value": "App1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "127.0.0.1:9000/Applications",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "9000",
+							"path": [
+								"Applications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show Resource",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "Name",
+									"value": "Mark",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "127.0.0.1:9000/Applications/{token}",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "9000",
+							"path": [
+								"Applications",
+								"{token}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update resource",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "Name",
+									"value": "App22",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "127.0.0.1:9000/Applications/{token}",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "9000",
+							"path": [
+								"Applications",
+								"{token}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete resource",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "Name",
+									"value": "Mark",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "127.0.0.1:9000/Applications/{token}",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "9000",
+							"path": [
+								"Applications",
+								"{token}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
